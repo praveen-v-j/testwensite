@@ -1,0 +1,51 @@
+@media (max-width: 500px) {
+  #hero-heading {
+    font-size: 28px;
+  }
+}
+
+#hero-heading {
+  font-size: 30px;
+}
+
+@media (max-width: 500px) {
+  .list-row {
+    display: table-footer-group;
+    width: 380px;
+  }
+}
+
+h3 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+  margin: initial;
+}
+
+#scial {
+  display: flex;
+  font-size: 48px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#hed-ft {
+  text-align: center;
+}
+
+#con-ft-lik {
+  text-align: center;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#makt-ft {
+  text-align: center;
+  text-align: center;
+  display: flex;
+  margin-left: auto;
+}
+
