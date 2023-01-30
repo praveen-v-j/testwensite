@@ -1,41 +1,43 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+if(isset($_POST['submit'])) {
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $message = $_POST['message'];
 
-require 'path/to/PHPMailer/src/Exception.php';
-require 'path/to/PHPMailer/src/PHPMailer.php';
-require 'path/to/PHPMailer/src/SMTP.php';
+  // Use PHPMailer library
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $message = $_POST['message'];
+  require 'assets\PHPMailer-master\src\Exception.php';
+  require 'assets\PHPMailer-master\src\PHPMailer.php';
+  require 'assets\PHPMailer-master\src\SMTP.php';
 
-    $mail = new PHPMailer(true);
+  $mail = new PHPMailer(true);
 
-    try {
-        //Server settings
-        $phpmailer = new PHPMailer();
-        $phpmailer->isSMTP();
-        $phpmailer->Host = 'smtp.mailtrap.io';
-        $phpmailer->SMTPAuth = true;
-        $phpmailer->Port = 2525;
-        $phpmailer->Username = '652f92a47acde0';
-        $phpmailer->Password = '64915040eafe54';
+  try {
+    // Server settings
+    $mail->SMTPDebug = 0;                      // Enable verbose debug output
+    $mail->isSMTP();                                            // Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+    $mail->Username   = 'praveen3164@gmail.com';                     // SMTP username
+    $mail->Password   = 'uhxhqpqddzoqgnmq';                               // SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+    $mail->Port       = 587;                                    // TCP port to connect to
 
-        //Recipients
-        $mail->setFrom($email, $name);
-        $mail->addAddress('praveen06506@gmail', 'Recipient Name');     // Add a recipient
+    // Recipients
+    $mail->setFrom($email, $name);
+    $mail->addAddress('praveen06506@gmail.com', 'Your Name');     // Add a recipient
 
-        // Content
-        $mail->isHTML(true);                                  // Set email format to HTML
-        $mail->Subject = 'New message from '.$name;
-        $mail->Body    = $message;
+    // Content
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = 'New Contact Form Submission';
+    $mail->Body    = $message;
 
-        $mail->send();
-        echo 'Message has been sent';
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
+    $mail->send();
+    echo 'Message has been sent';
+  } catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+  }
 }
 ?>
