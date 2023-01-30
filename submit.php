@@ -1,16 +1,44 @@
 <?php
-  if(!empty($_POST["send"])){
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $message = $_POST['message'];
-    $toEmail = $_POST["praveen3164@gmail.com"]
+use PHPMailer\PHPMailer\PHPMailer;
 
-    $mailHeaders = "name: " . $name .
-    "\r\n email: " . $email .
-    "\r\n message: " . $message . "\r\n";
+require_once 'assets\PHPMailer-master\src\Exception.php';
+require_once 'assets\PHPMailer-master\src\PHPMailer.php';
+require_once 'assets\PHPMailer-master\src\SMTP.php';
 
-    if(mail($toEmail, $name, $mailHeaders)){
-        $message = "Mail Send Successfully"
-    }
+$mail = new PHPMailer(true);
+
+$alert = '';
+
+if(isset($_POST['send'])){
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $message = $_POST['message'];
+
+  try{
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'praveen3164@gmail.com'; // Gmail address which you want to use as SMTP server
+    $mail->Password = 'nzkxcbqrmpmhfafo'; // Gmail address Password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = '587';
+
+    $mail->setFrom('praveen3164@gmail.com'); // Gmail address which you used as SMTP server
+    $mail->addAddress('praveen06506@gmail.com'); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
+
+    $mail->isHTML(true);
+    $mail->Subject = 'Message Received (Contact Page)';
+    $mail->Body = "<h3>Name : $name <br>Email: $email <br>Message : $message</h3>";
+
+    $mail->send();
+    $alert = '<div class="alert-success">
+                 <span>Message Sent! Thank you for contacting us.</span>
+                </div>';
+  } catch (Exception $e){
+    $alert = '<div class="alert-error">
+                <span>'.$e->getMessage().'</span>
+              </div>';
   }
+}
 ?>
+      
